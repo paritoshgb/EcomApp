@@ -1,9 +1,6 @@
-# 🧬 Pokedex App (React Native)
+# Pokedex App
 
-A fully featured and enhanced **Pokémon Pokedex App** built using **React Native**, powered by the [PokeAPI](https://pokeapi.co/).  
-This application is developed as part of the technical assessment for **Kriscent Techno Hub Pvt Ltd**.
-
----
+A React Native Pokedex app built using PokeAPI. Supports dark mode, search, favorite Pokémon list, animation transitions, and offline caching.
 
 ## ✨ Features
 
