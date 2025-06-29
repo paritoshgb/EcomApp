@@ -95,7 +95,7 @@ npm install
 ### 📥 Clone the Repository
 
 ```bash
-git clone https://github.com/paritoshgb/EComApp.git
+git clone https://github.com/paritoshgb/EcomApp.git
 cd EComApp
 
 ***📬 Contact
