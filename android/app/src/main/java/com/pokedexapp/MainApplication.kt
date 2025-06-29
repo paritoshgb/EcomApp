@@ -1,4 +1,4 @@
-package com.pokedexapp
+package com.EComApp
 
 import android.app.Application
 import com.facebook.react.PackageList

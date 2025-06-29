@@ -8,10 +8,9 @@ const SplashScreen = ({ navigation }) => {
       const hasLaunched = await AsyncStorage.getItem('hasLaunched');
       setTimeout(() => {
         if (hasLaunched === null) {
-          AsyncStorage.setItem('hasLaunched', 'true');
-          navigation.replace('GetStarted');
+          navigation.replace('StartedScreen');
         } else {
-          navigation.replace('MainTabs');
+          navigation.replace('Home');
         }
       }, 2500);
     };
@@ -21,7 +20,7 @@ const SplashScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../assets/logo.png')}
+        source={require('../Images/logo.png')}
         style={styles.logo}
         resizeMode="contain"
       />

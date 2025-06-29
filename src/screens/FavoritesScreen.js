@@ -1,75 +1,76 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  FlatList,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import PokemonCard from '../components/PokemonCard';
-import { netinfo } from '../hooks/netInfo';
+import ProductCard from '../components/ProductCard';
+import { useAppTheme } from '../utils/useAppTheme';
+import { useFocusEffect } from '@react-navigation/native';
 
-const FavoritesScreen = ({ navigation }) => {
+const FavoritesScreen = () => {
   const [favorites, setFavorites] = useState([]);
-  const isConnected = netinfo();
+  const { colors, isDarkMode, isConnected } = useAppTheme();
 
-  const loadFavs = async () => {
+  const loadFavorites = async () => {
     const keys = await AsyncStorage.getAllKeys();
     const favKeys = keys.filter(k => k.startsWith('fav_'));
-    const items = await AsyncStorage.multiGet(favKeys);
-    setFavorites(items.map(i => JSON.parse(i[1])));
+    const favItems = await AsyncStorage.multiGet(favKeys);
+    const parsed = favItems.map(([_, value]) => JSON.parse(value));
+    setFavorites(parsed);
   };
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', loadFavs);
-    return unsubscribe;
-  }, [navigation, isConnected]);
+  const handleRemove = item => {
+    const updated = favorites.filter(prod => prod.id !== item.id);
+    setFavorites(updated);
+  };
 
-  if (!favorites.length) {
-    return (
-      <View style={styles.center}>
-        <Text style={styles.empty}>No favorites yet.</Text>
-      </View>
-    );
-  }
+  useFocusEffect(
+    useCallback(() => {
+      loadFavorites();
+    }, []),
+  );
+
+  const renderItem = ({ item }) => (
+    <ProductCard
+      item={item}
+      isDarkMode={isDarkMode}
+      onRemoveFromFavorites={handleRemove}
+    />
+  );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       {!isConnected && (
         <Text style={styles.noInternet}>No Internet Connection</Text>
       )}
-      <FlatList
-        data={favorites}
-        keyExtractor={item => item.id?.toString()}
-        renderItem={renderItem}
-        numColumns={2}
-      />
+      {favorites.length === 0 ? (
+        <Text style={[styles.emptyText, { color: colors.text }]}>
+          No favorites yet.
+        </Text>
+      ) : (
+        <FlatList
+          data={favorites}
+          keyExtractor={item => item.id.toString()}
+          numColumns={2}
+          columnWrapperStyle={{ justifyContent: 'space-between' }}
+          renderItem={renderItem}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        />
+      )}
     </View>
   );
 };
-const renderItem = ({ item }) => <PokemonCard data={item} />;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 10,
-    backgroundColor: '#ABC3D6',
-  },
+  container: { flex: 1, padding: 16 },
   noInternet: {
     color: 'red',
     textAlign: 'center',
     marginVertical: 10,
   },
-  center: {
-    flex: 1,
-    paddingTop: 10,
-    alignSelf: 'center',
-  },
-  empty: {
-    color: 'red',
+  emptyText: {
+    fontSize: 18,
     textAlign: 'center',
-    marginVertical: 10,
+    marginTop: 40,
+    fontWeight: '600',
   },
 });
 

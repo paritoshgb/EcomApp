@@ -1,53 +1,81 @@
-# Pokedex App
+# EcomApp
 
-A React Native Pokedex app built using PokeAPI. Supports dark mode, search, favorite Pokémon list, animation transitions, and offline caching.
+A fully functional React Native **E-Commerce app** prototype built using the FakeStore API. It offers product browsing, detail view, cart, dummy checkout, offline support, and persistent favorites.
 
 ## ✨ Features
 
-- 🔁 **Infinite scrolling** with pagination using `FlatList`
-- ✨ **Shimmer loading** effect during data fetch
-- ❤️ Mark/unmark Pokémon as **Favorites**, stored locally using `AsyncStorage`
-- 📜 Favorites are **persisted across app launches**
-- 🔍 **Search** Pokémon by name (Server-side filtering)
-- 📄 Pokémon **Detail Screen** shows:
-  - Image
-  - Type(s)
-  - Abilities
-  - Stats (HP, Attack, Defense, etc.)
-- 🎉 **Splash Screen** + **Animated Get Started screen** (only shown once)
-- 🌓 **Dark Mode** support using device color scheme detection (optional if forcely used)
-- 🔘 **Bottom Tab Navigator** with:
-  - Home
-  - Favorites (with badge count)
-  - Search
-- 🔥 **Animations** on favorite toggle & screen transitions
-- ✅ Clean & modular code with comments and structure
+- 🖼️ **Home Screen**
+  - Static Category & banners slider
+  - Product list (API-based)
+  - Shimmer Placeholder while loading
+- 🛍️ **Product Listing**
+
+  - product list using `FlatList`
+  - Search bar with **server-side filtering**
+  - Filters & Sorting options
+  - Shimmer Placeholder while loading
+
+- 📦 **Product Detail Page**
+
+  - Product Image, Title, Price, Description
+  - Add to Cart (with badge count in tab)
+  - Mark/Unmark as Favorite (AsyncStorage)
+
+- 🛒 **Cart**
+
+  - View all cart items
+  - Increase/Decrease quantity (live total update)
+  - Remove items or clear cart
+  - Persistent using Redux-Persist
+
+- 🧾 **Checkout**
+
+  - Dummy shipping address & coupon code
+  - `ESHOP10` coupon applies 10% discount
+  - $5 fixed shipping charge
+  - Final amount summary
+  - Confirmation toast and clear cart on place order
+
+- 🌗 **Dark Mode** using system color scheme
+
+- 🧭 **Navigation**
+  - Splash Screen (shown once)
+  - Get Started Animation Screen
+  - Bottom Tab Navigator:
+    - Home
+    - Products
+    - Favorites (with badge count)
+    - Cart (with badge count)
 
 ---
 
 ## 🛠 Tech Stack
 
-- React Native
-- Axios
+- React Native CLI
 - React Navigation
+- Axios
+- Redux + Redux Persist
 - AsyncStorage
-- React Native Vector Icons
-- React Native Reanimated
 - Shimmer Placeholder
-- FlatList (for high performance list rendering)
-- Custom Axios wrapper (`getData`, `postData`)
+- Vector Icons
+- FakeStore API
+
+## 🧪 Test Credentials & Notes
+
+- Coupon Code: ESHOP10 → applies 10% off
+- Shipping Charge: $5 (added automatically)
 
 ---
 
-## 📦 Folder Structure
+## 📁 Folder Structure
 
-pokedexApp/
 ├── src/
-│ ├── components/ # Reusable components like PokemonCard
-│ ├── screens/ # All screen files
-│ ├── navigation/ # Stack & Tab navigation
-│ ├── assets/ # Images, splash icons etc.
-│ └── api/ # API logic
+│ ├── api/ # Axios logic
+│ ├── Images/ # Images & splash assets
+│ ├── components/ # Common reusable UI
+│ ├── screens/ # All app screens
+│ ├── redux/ # Redux store & reducers
+│ └── utils/ # Theme & helper hooks
 ├── App.js
 ├── README.md
 └── ...
@@ -67,19 +95,18 @@ npm install
 ### 📥 Clone the Repository
 
 ```bash
-git clone https://github.com/paritoshgb/pokedexApp.git
-cd pokedexApp
+git clone https://github.com/paritoshgb/EComApp.git
+cd EComApp
 
 ***📬 Contact
-Developed by ParitoshSharma
+Developed by Paritosh Sharma
 This project was created for interview evaluation only.
 
 ***📝 License
 This project is licensed under MIT.
-Uses public API from https://pokeapi.co
+Uses public API from https://fakestoreapi.com
 
 ***🙏 Special Thanks
-Kriscent Techno Hub Pvt Ltd for the opportunity
+ABHIWAN TECHNOLOGY for the opportunity
 
-PokeAPI for providing free Pokémon data
 ```
